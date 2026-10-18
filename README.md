@@ -6,9 +6,23 @@
 
 An agent on AWS that hands one decision to **Strands Decider 2B** and the conversation to **Amazon Bedrock**. Decision pattern: `#guardrails`. Tags: `#strands-decider-2b` `#guardrails`.
 
+- Live demo: https://main.d2wslsaw56enrs.amplifyapp.com/
+- Repository: https://github.com/dineshrajdhanapathyDD/CloudGuard-AI
 - Video: (add the YouTube/Vimeo link)
 - Article: (add the AWS Builder Center link)
 - Deployed: Amazon Bedrock AgentCore Runtime, us-east-1
+
+## Architecture
+
+![CloudGuard AI architecture on AWS](docs/architecture.png)
+
+The browser loads the React dashboard from AWS Amplify Hosting and calls a public API (Amazon API
+Gateway HTTP API) that proxies to an AWS Lambda. The Lambda, scoped by an IAM role, invokes the
+deployed Amazon Bedrock AgentCore runtime. Inside it, the Strands agent uses Amazon Bedrock
+(Nova Pro) for the conversation and tool use, and hands every proposed tool call to Strands
+Decider 2B (the AWS User Group Madurai hosted API) for the decision. A deterministic, fail-closed
+policy turns the decision into PROCEED / CLARIFY / DENY, and the generative model can never
+override a DENY.
 
 ## The project
 

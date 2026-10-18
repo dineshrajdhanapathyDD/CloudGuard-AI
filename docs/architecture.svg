@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="720" viewBox="0 0 1180 720" font-family="Segoe UI, Inter, Arial, sans-serif">
+  <rect width="1180" height="720" fill="#ffffff"/>
+  <text x="590" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#232F3E">CloudGuard AI — The Decision Gate for AWS Operations</text>
+  <text x="590" y="56" text-anchor="middle" font-size="12" fill="#687078">Built by Dineshraj Dhanapathy via AWSUGMDU (Agent Experience Hackathon)</text>
+
+  <rect x="210" y="80" width="930" height="580" rx="10" fill="none" stroke="#232F3E" stroke-width="2"/>
+  <text x="228" y="104" font-size="13" font-weight="700" fill="#232F3E">AWS Cloud — us-east-1</text>
+
+  <g>
+    <rect x="40" y="330" width="90" height="70" rx="8" fill="#232F3E"/>
+    <text x="85" y="360" text-anchor="middle" font-size="26" fill="#fff">&#128100;</text>
+    <text x="85" y="420" text-anchor="middle" font-size="12" fill="#232F3E">Engineer / SRE</text>
+    <text x="85" y="436" text-anchor="middle" font-size="11" fill="#687078">(browser)</text>
+  </g>
+
+  <g>
+    <rect x="250" y="150" width="150" height="66" rx="8" fill="#E7157B"/>
+    <text x="325" y="182" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">AWS Amplify</text>
+    <text x="325" y="200" text-anchor="middle" font-size="11" fill="#fff">React dashboard (SPA)</text>
+  </g>
+
+  <g>
+    <rect x="250" y="340" width="150" height="66" rx="8" fill="#E7157B"/>
+    <text x="325" y="368" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">API Gateway</text>
+    <text x="325" y="386" text-anchor="middle" font-size="11" fill="#fff">HTTP API  /api/*</text>
+  </g>
+
+  <g>
+    <rect x="470" y="340" width="150" height="66" rx="8" fill="#ED7100"/>
+    <text x="545" y="366" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">AWS Lambda</text>
+    <text x="545" y="383" text-anchor="middle" font-size="11" fill="#fff">CloudGuard API</text>
+    <text x="545" y="398" text-anchor="middle" font-size="10" fill="#fff">FastAPI + Mangum</text>
+  </g>
+
+  <g>
+    <rect x="470" y="470" width="150" height="60" rx="8" fill="#DD344C"/>
+    <text x="545" y="494" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">IAM Role</text>
+    <text x="545" y="511" text-anchor="middle" font-size="10" fill="#fff">InvokeAgentRuntime (least priv)</text>
+  </g>
+
+  <g>
+    <rect x="250" y="470" width="150" height="60" rx="8" fill="#7AA116"/>
+    <text x="325" y="494" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Amazon S3</text>
+    <text x="325" y="511" text-anchor="middle" font-size="10" fill="#fff">Lambda zip (CloudFormation)</text>
+  </g>
+
+  <g>
+    <rect x="690" y="300" width="160" height="66" rx="8" fill="#01A88D"/>
+    <text x="770" y="326" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Bedrock AgentCore</text>
+    <text x="770" y="343" text-anchor="middle" font-size="11" fill="#fff">Runtime</text>
+    <text x="770" y="358" text-anchor="middle" font-size="10" fill="#fff">(CloudGuard agent)</text>
+  </g>
+
+  <g>
+    <rect x="685" y="400" width="170" height="64" rx="8" fill="#E6F6F4" stroke="#01A88D" stroke-width="1.5"/>
+    <text x="770" y="424" text-anchor="middle" font-size="12" font-weight="700" fill="#232F3E">Strands Agent</text>
+    <text x="770" y="440" text-anchor="middle" font-size="10" fill="#232F3E">orchestration + tools</text>
+    <text x="770" y="454" text-anchor="middle" font-size="10" fill="#232F3E">+ guardrail intervention</text>
+  </g>
+
+  <g>
+    <rect x="930" y="300" width="170" height="66" rx="8" fill="#01A88D"/>
+    <text x="1015" y="326" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Amazon Bedrock</text>
+    <text x="1015" y="343" text-anchor="middle" font-size="11" fill="#fff">Nova Pro</text>
+    <text x="1015" y="358" text-anchor="middle" font-size="10" fill="#fff">generative: reply + tools</text>
+  </g>
+
+  <g>
+    <rect x="920" y="408" width="190" height="72" rx="8" fill="#FFF3E0" stroke="#ED7100" stroke-width="1.5" stroke-dasharray="5 3"/>
+    <text x="1015" y="432" text-anchor="middle" font-size="12" font-weight="700" fill="#232F3E">Strands Decider 2B</text>
+    <text x="1015" y="448" text-anchor="middle" font-size="10" fill="#232F3E">AWS UG Madurai hosted API</text>
+    <text x="1015" y="463" text-anchor="middle" font-size="10" fill="#ED7100" font-weight="700">the decision gate</text>
+  </g>
+
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#232F3E"/></marker>
+  <marker id="p" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#E7157B"/></marker>
+  <marker id="t" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#01A88D"/></marker>
+  <marker id="o" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#ED7100"/></marker>
+  <marker id="r" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#DD344C"/></marker></defs>
+
+  <line x1="130" y1="350" x2="250" y2="190" stroke="#E7157B" stroke-width="1.5" marker-end="url(#p)"/>
+  <text x="150" y="258" font-size="10" fill="#E7157B">loads SPA (HTTPS)</text>
+
+  <line x1="130" y1="375" x2="250" y2="373" stroke="#232F3E" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="138" y="392" font-size="10" fill="#232F3E">POST /api/chat (CORS)</text>
+
+  <line x1="400" y1="373" x2="470" y2="373" stroke="#232F3E" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="404" y="366" font-size="9" fill="#232F3E">AWS_PROXY</text>
+
+  <line x1="545" y1="406" x2="545" y2="470" stroke="#DD344C" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#r)"/>
+  <text x="552" y="444" font-size="9" fill="#DD344C">assumes</text>
+
+  <line x1="400" y1="500" x2="470" y2="500" stroke="#7AA116" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  <text x="412" y="493" font-size="9" fill="#7AA116">code</text>
+
+  <line x1="620" y1="366" x2="690" y2="340" stroke="#01A88D" stroke-width="1.5" marker-end="url(#t)"/>
+  <text x="600" y="326" font-size="9" fill="#01A88D">InvokeAgentRuntime (SigV4)</text>
+
+  <line x1="770" y1="366" x2="770" y2="400" stroke="#01A88D" stroke-width="1.5" marker-end="url(#t)"/>
+
+  <line x1="855" y1="420" x2="930" y2="350" stroke="#01A88D" stroke-width="1.5" marker-end="url(#t)"/>
+  <text x="856" y="398" font-size="9" fill="#01A88D">generative (Converse)</text>
+
+  <line x1="855" y1="440" x2="920" y2="444" stroke="#ED7100" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#o)"/>
+  <text x="852" y="486" font-size="9" fill="#ED7100">before each tool call: grounded? appropriate? clarify?</text>
+
+  <rect x="230" y="580" width="890" height="60" rx="6" fill="#F7F7F7" stroke="#CCC"/>
+  <text x="244" y="602" font-size="10.5" fill="#687078">Flow: the browser loads the Amplify SPA and calls the API; API Gateway proxies to Lambda; Lambda (IAM-scoped) invokes the deployed AgentCore agent;</text>
+  <text x="244" y="618" font-size="10.5" fill="#687078">the Strands agent uses Amazon Bedrock for the reply and Strands Decider 2B to gate every tool call. A deterministic fail-closed policy returns</text>
+  <text x="244" y="634" font-size="10.5" fill="#687078">PROCEED / CLARIFY / DENY — the generative model can never override a DENY.</text>
+</svg>

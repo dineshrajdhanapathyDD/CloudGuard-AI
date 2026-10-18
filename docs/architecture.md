@@ -6,6 +6,15 @@ Decider 2B handles one constrained judgement before any tool runs: is the propos
 appropriate, and does anything need clarifying? A deterministic, fail-closed policy turns that
 judgement — plus facts the code owns — into PROCEED, CLARIFY, or DENY.
 
+- Live demo: https://main.d2wslsaw56enrs.amplifyapp.com/
+- Repository: https://github.com/dineshrajdhanapathyDD/CloudGuard-AI
+
+![CloudGuard AI architecture on AWS](architecture.png)
+
+The source diagram is `docs/architecture.drawio` (editable in draw.io with AWS icons) and
+`docs/architecture.svg`; `docs/architecture.png` is the rendered image used above and in the
+README and article.
+
 ## Request flow
 
 ```

@@ -1,6 +1,9 @@
 # CloudGuard AI: The Decision Gate for AWS Operations
 Built by Dineshraj Dhanapathy via AWSUGMDU (Agent Experience Hackathon)
 
+Live demo: https://main.d2wslsaw56enrs.amplifyapp.com/
+Code: https://github.com/dineshrajdhanapathyDD/CloudGuard-AI
+
 ## Hook
 
 Imagine an AWS operations assistant that ensures every action is grounded, appropriate, and safe. CloudGuard AI is that assistant, leveraging Strands Decider 2B to judge AWS tool calls before they execute. This results in a reliable, fast, and secure AWS investigation tool.
@@ -16,11 +19,13 @@ CloudGuard AI is designed for on-call engineers and SREs who need a quick and tr
 - Deployed on Amazon Bedrock AgentCore Runtime.
 
 < FIGURE 1 of 5: upload submission/article/img/architecture.png here >
-Alt text: Architecture: the user, the agent with its tools and decision, Amazon Bedrock and Strands Decider 2B
+Alt text: Architecture on AWS: the browser loads the React dashboard from Amplify and calls an API Gateway HTTP API, which proxies to a Lambda that invokes the Bedrock AgentCore runtime; the Strands agent uses Amazon Bedrock Nova Pro for the reply and Strands Decider 2B to gate every tool call, with a fail-closed policy returning proceed, clarify or deny
 
 ## How I Built It
 
 The architecture of CloudGuard AI consists of Strands Agents, various tools, Amazon Bedrock for the generative part, and AgentCore Runtime. Strands Decider 2B is integrated to make critical decisions. The build process was spec-driven, utilizing Kiro for development.
+
+The agent runs on Amazon Bedrock AgentCore Runtime. The public demo is fully serverless: the React dashboard is hosted on AWS Amplify, and it calls a public endpoint on Amazon API Gateway (HTTP API) that proxies to an AWS Lambda. The Lambda, scoped by a least-privilege IAM role that can only call InvokeAgentRuntime, invokes the deployed AgentCore agent. That backend is defined as CloudFormation and deploys with one command. The browser never holds AWS credentials and never talks to AgentCore directly; the Lambda is the thin, credential-holding translator.
 
 ## The Decision Handed to Strands Decider 2B
 
