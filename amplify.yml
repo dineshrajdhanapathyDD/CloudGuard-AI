@@ -1,0 +1,34 @@
+# AWS Amplify Hosting build spec for the CloudGuard AI frontend (React + Vite + TypeScript).
+# The app lives in the frontend/ subdirectory, so this uses the monorepo form with appRoot.
+#
+# Setup in the Amplify console:
+#   1. Host web app -> connect GitHub -> repo dineshrajdhanapathyDD/CloudGuard-AI, branch main.
+#   2. Amplify auto-detects this amplify.yml. Confirm app root is "frontend".
+#   3. The SPA rewrite (all paths -> /index.html) is set below under customRules via the console:
+#      add a rewrite rule  Source: /<*>  Target: /index.html  Type: 200 (Rewrite)
+#      so client-side routes resolve. (Amplify cannot set rewrites from amplify.yml yet.)
+#
+# NOTE ON THE API: this hosts the static SPA only. The dashboard calls /api/* (the FastAPI demo
+# server). Amplify Hosting does not run that backend. To make the live site chat, add an Amplify
+# rewrite that proxies /api/<*> to a deployed backend URL (API Gateway/Lambda, App Runner, etc.):
+#      Source: /api/<*>   Target: https://<your-api-host>/api/<*>   Type: 200 (Rewrite)
+# Without that, the site loads but chat calls will 404. See frontend/README.md.
+
+version: 1
+applications:
+  - appRoot: frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: dist
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
