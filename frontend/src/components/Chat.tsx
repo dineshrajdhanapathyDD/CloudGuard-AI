@@ -72,6 +72,7 @@ export function Chat({
 
       <form onSubmit={submit} className="mt-3 flex gap-2">
         <input
+          id="m"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={busy}

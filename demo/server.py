@@ -24,8 +24,17 @@ from decider_kit.config import load_dotenv
 
 load_dotenv()
 STATIC = Path(__file__).parent / "static"
+# The polished React dashboard (frontend/dist), built with `npm run build`. When present it is
+# served at / instead of the simple static UI, and its /assets are mounted. This is what
+# `./kit video` records. Falls back to demo/static/index.html if the React app is not built.
+FRONTEND_DIST = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 app = FastAPI(title="Strands Decider hackathon demo")
 _agent: Any = None
+
+if (FRONTEND_DIST / "assets").is_dir():
+    from fastapi.staticfiles import StaticFiles
+
+    app.mount("/assets", StaticFiles(directory=str(FRONTEND_DIST / "assets")), name="assets")
 
 
 class Turn(BaseModel):
@@ -69,7 +78,10 @@ class AgentCoreClient:
 
 @app.get("/")
 def index() -> FileResponse:
-    return FileResponse(STATIC / "index.html")
+    react_index = FRONTEND_DIST / "index.html"
+    if react_index.exists():
+        return FileResponse(react_index)  # the React dashboard (frontend/dist)
+    return FileResponse(STATIC / "index.html")  # fallback: the simple built-in UI
 
 
 @app.get("/api/info")

@@ -52,6 +52,9 @@ export default function App() {
       setMessages((m) => [...m, { role: "bot", text: `Error: ${String(e)}` }]);
     } finally {
       setBusy(false);
+      // Signal turn completion for the kit's video recorder (make_video.py waits on this), matching
+      // the old static UI's contract.
+      document.body.dataset.turns = String((Number(document.body.dataset.turns) || 0) + 1);
     }
   }
 
