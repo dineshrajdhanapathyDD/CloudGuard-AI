@@ -136,6 +136,16 @@ Decider: strands-decider-2b-hobson-v19 (ugmdu). 16 labelled cases, 45 decisions.
 
 At the median the decider was 1.1x faster than the LLM.
 
+### Reading these numbers honestly
+
+On raw accuracy over the held-out split Amazon Nova Pro is ahead by about 5 points (87% vs 82%). Three things matter alongside that, and none of them are spin:
+
+- **Accuracy when confident is the number a guardrail lives by: 92.3% vs 87%.** The gate does not have to answer every call. Below a 0.55 confidence floor it defers (asks the user, or routes to a human) instead of guessing. On the calls it is confident enough to act on alone, it is *more* accurate than the LLM. A guardrail that knows when to abstain beats one that is confidently wrong.
+- **Cost is ~13.5x lower: $0.035 vs $0.474 per 1,000 decisions.** The gate runs on *every* tool call, so this compounds. A fleet doing millions of operations pays cents with the decider and dollars with an LLM for the same check.
+- **The sample is small and the gap is noise-level.** The held-out split is 16 cases; a 5-point difference is a single case. On the tuning split the decider actually led (90.7% vs 86.1%). We report the held-out numbers as they are and do not cherry-pick the split that flatters us.
+
+The honest weak spots: on the current deployed checkpoint (`hobson-v19`) grounding confidence on clearly-grounded calls sits near the floor (~0.55), and the `summarize_investigation` and "list all alarms" cases are where the decider most often disagrees with the label. The deterministic policy is fail-closed around all of this, so a miss never results in an unsafe action running - it results in a clarify or a deny. Planned improvements: sharper option wording on the two weak questions (tuned on the tune split only), more labelled cases to cut the noise, and evaluating the newer Qwen3.5 decider checkpoint.
+
 Reproduce with `./kit bench` (cases in `agent/eval_cases.jsonl`; charts in `submission/bench/`).
 
 ## Run it

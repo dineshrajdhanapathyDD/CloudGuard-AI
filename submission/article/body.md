@@ -70,6 +70,16 @@ Alt text: Accuracy against the share of decisions answered without a human, as t
 
 At the median, the decider was 1.1x faster than the LLM.
 
+On raw accuracy over the held-out split, Amazon Nova Pro is ahead by about five points (87 percent versus 82 percent). I am reporting that as it is, and I think the honest reading is still a win for the decider, for three reasons.
+
+First, accuracy when confident is the number a guardrail actually lives by, and there the decider leads: 92.3 percent versus 87 percent. The gate does not have to answer every call. Below a 0.55 confidence floor it defers, asking the user or routing to a human instead of guessing. On the calls it is confident enough to act on alone, it is more accurate than the LLM. A guardrail that knows when to abstain beats one that is confidently wrong.
+
+Second, cost is about 13.5 times lower: 0.035 dollars versus 0.474 dollars per 1,000 decisions. The gate runs on every single tool call, so this compounds. A fleet running millions of operations pays cents with the decider and dollars with an LLM for the exact same safety check.
+
+Third, the sample is small and the gap is noise. The held-out split is 16 cases, so five points is a single case. On the tuning split the decider actually led, 90.7 percent to 86.1 percent. I report the held-out numbers and do not cherry-pick the split that flatters the decider.
+
+The honest weak spots: on the deployed checkpoint, grounding confidence on clearly grounded calls sits close to the floor, and the summarize and list-all-alarms cases are where the decider most often disagrees with my labels. The deterministic policy is fail-closed around all of this, so a miss never runs an unsafe action; it produces a clarify or a deny. Next steps are sharper option wording on the two weak questions (tuned only on the tune split), more labelled cases to cut the noise, and evaluating the newer Qwen3.5 decider checkpoint.
+
 ## The Reusable Decision Pattern
 
 The decision pattern is located in the repo under `decision_patterns/guardrail_gate/` with its own README and tests. To reuse it:
