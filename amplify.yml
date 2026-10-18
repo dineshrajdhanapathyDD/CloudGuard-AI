@@ -4,15 +4,18 @@
 # Setup in the Amplify console:
 #   1. Host web app -> connect GitHub -> repo dineshrajdhanapathyDD/CloudGuard-AI, branch main.
 #   2. Amplify auto-detects this amplify.yml. Confirm app root is "frontend".
-#   3. The SPA rewrite (all paths -> /index.html) is set below under customRules via the console:
-#      add a rewrite rule  Source: /<*>  Target: /index.html  Type: 200 (Rewrite)
-#      so client-side routes resolve. (Amplify cannot set rewrites from amplify.yml yet.)
+#   3. Add environment variable so the SPA calls the deployed backend (see "THE API" below):
+#        VITE_API_BASE = https://az18l3eyh4.execute-api.us-east-1.amazonaws.com
+#      (Amplify injects env vars at build time; Vite reads VITE_* into the bundle.)
+#   4. Add the SPA rewrite so client-side routes resolve (App settings -> Rewrites and redirects):
+#        Source: /<*>   Target: /index.html   Type: 200 (Rewrite)
 #
-# NOTE ON THE API: this hosts the static SPA only. The dashboard calls /api/* (the FastAPI demo
-# server). Amplify Hosting does not run that backend. To make the live site chat, add an Amplify
-# rewrite that proxies /api/<*> to a deployed backend URL (API Gateway/Lambda, App Runner, etc.):
-#      Source: /api/<*>   Target: https://<your-api-host>/api/<*>   Type: 200 (Rewrite)
-# Without that, the site loads but chat calls will 404. See frontend/README.md.
+# THE API (now live): the dashboard chats through a deployed backend - a Lambda behind API Gateway
+# that invokes the Amazon Bedrock AgentCore runtime. It is deployed by deploy/api (CloudFormation):
+#        https://az18l3eyh4.execute-api.us-east-1.amazonaws.com
+# Point the frontend at it with the VITE_API_BASE env var above (recommended), OR add a rewrite:
+#        Source: /api/<*>   Target: https://az18l3eyh4.execute-api.us-east-1.amazonaws.com/api/<*>   Type: 200
+# Redeploy/tear down the backend with:  cd deploy/api ; .\deploy.ps1   (or .\deploy.ps1 -Destroy)
 
 version: 1
 applications:

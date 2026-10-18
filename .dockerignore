@@ -1,0 +1,21 @@
+# Keep the Lambda image build context small. Only decider_kit/, demo/, agent/ are COPYed in.
+.venv/
+**/__pycache__/
+**/*.pyc
+.git/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+deploy/api/cdk.out/
+deploy/agentcore/
+node_modules/
+cdk.out/
+submission/
+tests/
+docs/
+examples/
+scripts/
+install/
+.kiro/
+*.log
+.env

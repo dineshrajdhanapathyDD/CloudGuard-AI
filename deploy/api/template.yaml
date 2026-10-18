@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  CloudGuard AI public API - a thin Lambda (FastAPI via Mangum) behind an API Gateway HTTP API that
+  invokes the deployed Amazon Bedrock AgentCore runtime. Gives the Amplify-hosted frontend a public
+  HTTPS /api endpoint to chat through. Built by Dineshraj Dhanapathy via AWSUGMDU.
+
+Parameters:
+  AgentRuntimeArn:
+    Type: String
+    Description: ARN of the deployed Bedrock AgentCore runtime to invoke.
+  BedrockModelId:
+    Type: String
+    Default: us.amazon.nova-pro-v1:0
+  DeciderMode:
+    Type: String
+    Default: ugmdu
+  CorsOrigin:
+    Type: String
+    Default: "*"
+    Description: Allowed browser origin (set to your Amplify URL for a tighter policy).
+  CodeS3Bucket:
+    Type: String
+    Description: S3 bucket holding the packaged Lambda zip (created/used by deploy.ps1).
+  CodeS3Key:
+    Type: String
+    Description: S3 key of the packaged Lambda zip.
+
+Resources:
+  ApiFnRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: { Service: lambda.amazonaws.com }
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: invoke-agentcore
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              # Least privilege: the API may only invoke the one deployed runtime (and its endpoints).
+              - Effect: Allow
+                Action: bedrock-agentcore:InvokeAgentRuntime
+                Resource:
+                  - !Ref AgentRuntimeArn
+                  - !Sub "${AgentRuntimeArn}/*"
+
+  ApiFn:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: cloudguard-api
+      Runtime: python3.12
+      Handler: app.handler
+      Role: !GetAtt ApiFnRole.Arn
+      MemorySize: 1024
+      Timeout: 60
+      Code:
+        S3Bucket: !Ref CodeS3Bucket
+        S3Key: !Ref CodeS3Key
+      Environment:
+        Variables:
+          AGENTCORE_ARN: !Ref AgentRuntimeArn
+          BEDROCK_MODEL_ID: !Ref BedrockModelId
+          DECIDER_MODE: !Ref DeciderMode
+          CORS_ORIGIN: !Ref CorsOrigin
+
+  HttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: cloudguard-api
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins: [!Ref CorsOrigin]
+        AllowMethods: ["GET", "POST", "OPTIONS"]
+        AllowHeaders: ["content-type"]
+
+  Integration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt ApiFn.Arn
+      PayloadFormatVersion: "2.0"
+
+  DefaultRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: "$default"
+      Target: !Sub "integrations/${Integration}"
+
+  Stage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref HttpApi
+      StageName: "$default"
+      AutoDeploy: true
+
+  InvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ApiFn
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*/*"
+
+Outputs:
+  ApiUrl:
+    Description: Public base URL of the CloudGuard API (append /api/info, /api/chat).
+    Value: !GetAtt HttpApi.ApiEndpoint
