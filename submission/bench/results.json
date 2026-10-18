@@ -1,0 +1,659 @@
+{
+ "decider_model": "strands-decider-2b-hobson-v19",
+ "rows": [
+  {
+   "i": 0,
+   "expected": {
+    "args_grounded": "yes",
+    "appropriate": "yes",
+    "needs_clarify": "no"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 0.6427
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.7854
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 0.7158
+    }
+   },
+   "decider_ms": 3390.7782999995106,
+   "decider_server_ms": 2530.5,
+   "llm": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 2879.4632999997702,
+   "llm_cost": 0.0012752000000000002
+  },
+  {
+   "i": 1,
+   "expected": {
+    "args_grounded": "yes",
+    "appropriate": "yes",
+    "needs_clarify": "no"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 0.6884
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.6552
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 0.7138
+    }
+   },
+   "decider_ms": 2935.8418000010715,
+   "decider_server_ms": 2316.2,
+   "llm": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 3081.5904999981285,
+   "llm_cost": 0.0014768
+  },
+  {
+   "i": 2,
+   "expected": {
+    "args_grounded": "yes",
+    "appropriate": "yes",
+    "needs_clarify": "no"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 0.7615
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.5677
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 0.7679
+    }
+   },
+   "decider_ms": 3136.870700000145,
+   "decider_server_ms": 2569.3,
+   "llm": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 2660.2098000003025,
+   "llm_cost": 0.0013144
+  },
+  {
+   "i": 3,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "yes",
+    "needs_clarify": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.6477
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.558
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 0.6735
+    }
+   },
+   "decider_ms": 2880.8496999990894,
+   "decider_server_ms": 2277.1,
+   "llm": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 2750.6332000011753,
+   "llm_cost": 0.0012328
+  },
+  {
+   "i": 4,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "yes",
+    "needs_clarify": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.6299
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.6704
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 0.5037
+    }
+   },
+   "decider_ms": 2909.6687999990536,
+   "decider_server_ms": 2371.2,
+   "llm": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.9
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.8
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 0.9
+    }
+   },
+   "llm_ms": 2744.022300001234,
+   "llm_cost": 0.001376
+  },
+  {
+   "i": 5,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "no",
+    "needs_clarify": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.7164
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 0.7812
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 0.6971
+    }
+   },
+   "decider_ms": 2778.09200000047,
+   "decider_server_ms": 2195.6,
+   "llm": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 3320.5687000008766,
+   "llm_cost": 0.0013112000000000002
+  },
+  {
+   "i": 6,
+   "expected": {
+    "args_grounded": "yes",
+    "appropriate": "no"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 0.5498
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 0.7029
+    }
+   },
+   "decider_ms": 2492.2110000006796,
+   "decider_server_ms": 1789.1,
+   "llm": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 3101.372299999639,
+   "llm_cost": 0.0011528
+  },
+  {
+   "i": 7,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "no",
+    "needs_clarify": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.6643
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 0.5739
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 0.6244
+    }
+   },
+   "decider_ms": 2864.8509999984526,
+   "decider_server_ms": 2308.4,
+   "llm": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 2884.9372000004223,
+   "llm_cost": 0.0012928
+  },
+  {
+   "i": 8,
+   "expected": {
+    "args_grounded": "yes",
+    "appropriate": "no"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 0.6825
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 0.6568
+    }
+   },
+   "decider_ms": 2336.6611000019475,
+   "decider_server_ms": 1770.2,
+   "llm": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 3703.186900002038,
+   "llm_cost": 0.001248
+  },
+  {
+   "i": 9,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.7204
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 0.5398
+    }
+   },
+   "decider_ms": 2436.4974000018265,
+   "decider_server_ms": 1906.6,
+   "llm": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 2761.233999997785,
+   "llm_cost": 0.0011752000000000002
+  },
+  {
+   "i": 10,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "no",
+    "needs_clarify": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.5391
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.799
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 0.5751
+    }
+   },
+   "decider_ms": 3836.1585999991803,
+   "decider_server_ms": 2476.5,
+   "llm": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.9
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.8
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 0.9
+    }
+   },
+   "llm_ms": 3080.931699998473,
+   "llm_cost": 0.001528
+  },
+  {
+   "i": 11,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "no",
+    "needs_clarify": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.6017
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.5823
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 0.5036
+    }
+   },
+   "decider_ms": 2723.0497999989893,
+   "decider_server_ms": 2131.6,
+   "llm": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 2955.067799997778,
+   "llm_cost": 0.0013848000000000003
+  },
+  {
+   "i": 12,
+   "expected": {
+    "args_grounded": "yes",
+    "appropriate": "yes",
+    "needs_clarify": "no"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.657
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.735
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 0.7741
+    }
+   },
+   "decider_ms": 2869.954699999653,
+   "decider_server_ms": 2235.0,
+   "llm": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 2748.3636000033584,
+   "llm_cost": 0.0012888
+  },
+  {
+   "i": 13,
+   "expected": {
+    "args_grounded": "yes",
+    "appropriate": "yes",
+    "needs_clarify": "no"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.5476
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.559
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 0.5533
+    }
+   },
+   "decider_ms": 3181.5120999999635,
+   "decider_server_ms": 2509.6,
+   "llm": {
+    "args_grounded": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 3416.3765999983298,
+   "llm_cost": 0.0014624
+  },
+  {
+   "i": 14,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "yes",
+    "needs_clarify": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.6823
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 0.5685
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 0.5961
+    }
+   },
+   "decider_ms": 3134.0433999976085,
+   "decider_server_ms": 2411.5,
+   "llm": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 4960.629099998187,
+   "llm_cost": 0.0013135999999999998
+  },
+  {
+   "i": 15,
+   "expected": {
+    "args_grounded": "no",
+    "appropriate": "no",
+    "needs_clarify": "yes"
+   },
+   "decider": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 0.6438
+    },
+    "appropriate": {
+     "label": "no",
+     "confidence": 0.7289
+    },
+    "needs_clarify": {
+     "label": "no",
+     "confidence": 0.5814
+    }
+   },
+   "decider_ms": 3062.151599999197,
+   "decider_server_ms": 2370.2,
+   "llm": {
+    "args_grounded": {
+     "label": "no",
+     "confidence": 1.0
+    },
+    "appropriate": {
+     "label": "yes",
+     "confidence": 0.8
+    },
+    "needs_clarify": {
+     "label": "yes",
+     "confidence": 1.0
+    }
+   },
+   "llm_ms": 3410.949000000983,
+   "llm_cost": 0.0014960000000000002
+  }
+ ],
+ "summary": {
+  "decider": {
+   "accuracy": 0.8222,
+   "decisions": 45,
+   "per_question": {
+    "args_grounded": 0.875,
+    "appropriate": 0.75,
+    "needs_clarify": 0.8462
+   },
+   "latency_p50_ms": 2909.7,
+   "latency_p95_ms": 3390.8,
+   "usd_per_1k_decisions": 0.035,
+   "confident_share": 0.2889,
+   "accuracy_when_confident": 0.9231,
+   "sent_to_human_at_threshold": 32
+  },
+  "llm": {
+   "accuracy": 0.8667,
+   "decisions": 45,
+   "per_question": {
+    "args_grounded": 0.9375,
+    "appropriate": 0.75,
+    "needs_clarify": 0.9231
+   },
+   "latency_p50_ms": 3080.9,
+   "latency_p95_ms": 3703.2,
+   "usd_per_1k_decisions": 0.474,
+   "confident_share": 1.0,
+   "accuracy_when_confident": 0.8667,
+   "sent_to_human_at_threshold": 0
+  },
+  "speedup_p50": 1.06
+ },
+ "threshold": 0.7,
+ "llm_model": "us.amazon.nova-pro-v1:0",
+ "llm_provider": "bedrock",
+ "llm_where": "Amazon Bedrock (us.amazon.nova-pro-v1:0)",
+ "decider_url": "https://da25tnxy06gjk.cloudfront.net",
+ "decider_mode": "ugmdu",
+ "ran_at": 1792315224.7604573,
+ "split": "test"
+}

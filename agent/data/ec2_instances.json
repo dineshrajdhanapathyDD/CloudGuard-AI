@@ -1,0 +1,5 @@
+[
+ {"instance_id": "i-1234567890abcdef0", "instance_type": "m5.xlarge", "state": "running", "az": "us-east-1a", "name": "web-prod-1", "launched": "2026-09-01", "environment": "production"},
+ {"instance_id": "i-0abc1111222233334", "instance_type": "t3.medium", "state": "running", "az": "us-east-1b", "name": "batch-worker-2", "launched": "2026-10-05", "environment": "staging"},
+ {"instance_id": "i-09f8e7d6c5b4a3210", "instance_type": "c6g.2xlarge", "state": "stopped", "az": "us-east-1c", "name": "analytics-1", "launched": "2026-08-20", "environment": "production"}
+]

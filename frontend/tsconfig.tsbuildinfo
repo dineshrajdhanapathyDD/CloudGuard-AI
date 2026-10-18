@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/scenarios.ts","./src/types.ts","./src/vite-env.d.ts","./src/components/chat.tsx","./src/components/decisioncard.tsx","./src/components/decisionmix.tsx","./src/components/header.tsx","./src/components/scenariolauncher.tsx","./src/components/statcards.tsx","./src/components/verdict.ts","./src/services/api.ts"],"version":"5.9.3"}

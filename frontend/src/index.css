@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(57, 192, 237, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 0% 10%, rgba(255, 153, 0, 0.05), transparent 55%), #0a0e1a;
+  color: #e7ecf6;
+  font-family: Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Thin scrollbars that match the slate theme */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #223052 transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #223052;
+  border-radius: 99px;
+}
+
+/* Visible focus ring for keyboard navigation (accessibility) */
+:focus-visible {
+  outline: 2px solid #39c0ed;
+  outline-offset: 2px;
+  border-radius: 8px;
+}

@@ -1,0 +1,15 @@
+# Amazon Bedrock AgentCore features for CloudGuard AI. `./kit deploy` adds what is enabled.
+# CloudGuard's one decision is a guardrail that needs only the conversation and the proposed call,
+# so neither Memory nor Gateway is required; Runtime alone puts the agent on AWS with Bedrock.
+
+memory:
+  enabled: false
+  name: cloudguardmemory
+  strategies: [SEMANTIC, USER_PREFERENCE]
+  expiry_days: 30
+
+gateway:
+  enabled: false
+  name: tools
+  authorizer: AWS_IAM
+  targets: []

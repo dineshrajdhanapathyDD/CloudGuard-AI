@@ -1,0 +1,157 @@
+{
+ "pattern_tag": "#guardrails",
+ "agentcore_features": [],
+ "pattern_doc": "REUSABLE DECISION PATTERN: aws-operation guardrail gate  (#guardrails)\n\nWhat it does\n    CloudGuard AI is an AWS operations assistant. Before it runs any AWS tool, this gate hands\n    Strands Decider 2B the conversation plus the proposed tool call and asks three narrow,\n    language-level judgements:\n      - args_grounded:  do the argument values (instance ids, metric names, ...) trace back to\n                        what the user actually said or to an earlier verified tool result, or\n                        were they invented?\n      - appropriate:    is this tool a sensible response to what the user asked for, given the\n                        evidence so far?\n      - needs_clarify:  is essential information missing, so the agent should ask the user\n                        before acting?\n    The model only classifies. A deterministic policy (see `policy.py`) combines those three\n    probabilities with code-owned facts the decider never sees - whether the tool is even\n    permitted, whether it is destructive, and whether the arguments pass structural validation -\n    and returns one of PROCEED / CLARIFY / DENY. The policy is fail-closed: a destructive or\n    unknown tool, malformed arguments, or a decider that is unavailable or unsure never results\n    in the action running.\n\nTyped questions and options\n    args_grounded (noul), appropriate (noul), needs_clarify (noul); see QUESTIONS below.\n\nWiring (where it sits in the agent's path)\n    `AWSOperationGuard` is a Strands `InterventionHandler`. agent/agent.py passes it to the Agent:\n\n        Agent(..., interventions=[AWSOperationGuard(Decider())])\n\n    The framework calls `before_tool_call` before every tool runs. Read-only, grounded calls\n    PROCEED; a DENY is returned to the model as a hard refusal (Strands `Deny`); a CLARIFY is\n    returned as `Guide` so the agent asks the user instead of guessing. If the agent retries the\n    exact same guided call unchanged, the retry is denied (Strands requires Guide to converge).\n    `before_invocation` clears the per-turn guided set.\n\nHow to reuse it\n    Copy this file into your own agent. Then:\n      1. list your irreversible/destructive tools in DESTRUCTIVE_TOOLS and the tools the agent is\n         allowed to use at all in ALLOWED_TOOLS (fail-closed: anything else is denied);\n      2. reword the three QUESTIONS for your domain (keep one judgement per question, and\n         describe both options - the descriptions carry most of the signal);\n      3. keep the facts code already knows (permission, risk, structural validation) in\n         `policy.py` and out of the decider;\n      4. tune thresholds with `./kit bench` and record the chosen values in `policy.py`.\n    Nothing here depends on CloudGuard's tools; the gate is the reusable piece.\n\nThis gate is also packaged standalone under `decision_patterns/guardrail_gate/` with its own\nREADME and tests, so another builder can read it without the rest of the app.",
+ "questions_code": "QUESTIONS = {\n    \"args_grounded\": Decider.noul(\n        \"Does every argument value in the proposed tool call appear in the conversation above - stated by the user or returned by an earlier tool?\",\n        {\"true\": \"each argument value (for example the instance id) is present verbatim in the user's messages or an earlier tool result\",\n         \"false\": \"at least one argument value does not appear anywhere in the conversation; it was guessed or invented\"}),\n    \"appropriate\": Decider.noul(\n        \"Is this tool an appropriate response to the user's request?\",\n        {\"true\": \"a read-only investigation (reading instance details, metrics or alarms), or a change the user explicitly asked for\",\n         \"false\": \"a change or destructive action (restart, stop, terminate, delete) the user did not ask for\"}),\n    \"needs_clarify\": Decider.noul(\n        \"Does essential information have to be clarified with the user before this action can safely run?\",\n        {\"true\": \"a required detail is missing or ambiguous (which instance? which environment?); ask before acting\",\n         \"false\": \"everything needed to act is present and unambiguous\"}),\n}",
+ "agent_md": "# Use case\n\n- **Pitch:** CloudGuard AI is an AWS operations assistant with a decision gate: before it runs any\n  AWS investigation tool, Strands Decider 2B judges whether the call is grounded, appropriate and\n  safe, so the agent never acts on invented instance ids or runs an action nobody asked for.\n- **Who it is for:** on-call engineers and SREs who want a fast assistant for AWS investigations\n  without the risk that an eager agent fabricates arguments or reaches for a destructive action.\n- **Features:**\n  - investigate EC2 issues through chat: instance details, CloudWatch metrics, alarms, and a\n    written summary;\n  - every tool call is gated before it runs - grounded read-only calls proceed, ungrounded or\n    inappropriate calls are blocked, ambiguous ones ask for clarification;\n  - a deterministic, fail-closed safety policy that the generative model cannot override: a\n    destructive or unknown tool, malformed arguments, or an unavailable decider never execute;\n  - a live decision panel in the demo UI showing the three Decider answers, the confidence, the\n    latency, the policy outcome, and the full audit trace;\n  - deployed on Amazon Bedrock AgentCore Runtime.\n- **The decision handed to Strands Decider 2B:** before an AWS tool call, are its arguments\n  grounded in what the user said, is the call appropriate for the request, and is essential\n  information missing? (`#guardrails`)\n- **Why a decision model:** grounding, appropriateness and \"is something missing\" are judgements\n  over the conversation's language - exactly what an `if` cannot decide. The exact facts (is the\n  tool allowed? is it destructive? does the instance id parse?) stay in code and feed the policy.\n- **Amazon Bedrock:** the conversation, the tool use, and the human-readable explanation (Amazon\n  Nova Pro by default).\n\nBuilt by Dineshraj Dhanapathy via AWSUGMDU.\n\nBuilt with the AWS User Group Madurai Strands Decider hackathon kit.\n",
+ "llm_provider_local_runs": "bedrock",
+ "agent_name": "CloudGuard AI: the decision gate for AWS operations",
+ "bench": {
+  "summary": {
+   "decider": {
+    "accuracy": 0.8222,
+    "decisions": 45,
+    "per_question": {
+     "args_grounded": 0.875,
+     "appropriate": 0.75,
+     "needs_clarify": 0.8462
+    },
+    "latency_p50_ms": 2909.7,
+    "latency_p95_ms": 3390.8,
+    "usd_per_1k_decisions": 0.035,
+    "confident_share": 0.2889,
+    "accuracy_when_confident": 0.9231,
+    "sent_to_human_at_threshold": 32
+   },
+   "llm": {
+    "accuracy": 0.8667,
+    "decisions": 45,
+    "per_question": {
+     "args_grounded": 0.9375,
+     "appropriate": 0.75,
+     "needs_clarify": 0.9231
+    },
+    "latency_p50_ms": 3080.9,
+    "latency_p95_ms": 3703.2,
+    "usd_per_1k_decisions": 0.474,
+    "confident_share": 1.0,
+    "accuracy_when_confident": 0.8667,
+    "sent_to_human_at_threshold": 0
+   },
+   "speedup_p50": 1.06
+  },
+  "decider_model": "strands-decider-2b-hobson-v19",
+  "decider_mode": "ugmdu",
+  "llm_model": "us.amazon.nova-pro-v1:0",
+  "cases": 16,
+  "split": "test",
+  "threshold": 0.7
+ },
+ "bench_table": "Decider: strands-decider-2b-hobson-v19 (ugmdu). 16 labelled cases, 45 decisions.\n\n| | Strands Decider 2B | us.amazon.nova-pro-v1:0 |\n|---|---|---|\n| Accuracy | 82.2% | 86.7% |\n| Latency p50 per decision | 2910 ms | 3081 ms |\n| Latency p95 | 3391 ms | 3703 ms |\n| Cost per 1,000 decisions | $0.0350 | $0.4740 |\n| Answered alone at confidence >= 0.7 | 29% | 100% |\n| Accuracy when confident | 92.3% | 86.7% |\n\nAt the median the decider was 1.1x faster than the LLM.\n",
+ "demo_turns": [
+  {
+   "user": "Investigate high CPU utilization on EC2 instance i-1234567890abcdef0.",
+   "reply": "I'm sorry, but I was unable to summarize the investigation due to a guardrail restriction. However, I can provide you with the findings directly:\n\nThe EC2 instance i-1234567890abcdef0 is an m5.xlarge instance running in the us-east-1a Availability Zone. The instance is currently in the \"running\" state and is named \"web-prod-1\". \n\nAccording to CloudWatch metrics, the CPU utilization for this instance over the last hour has been as follows: 60%, 76%, 92%, 108%, 27%, and 43%. The latest CPU utilization is 43%.\n\nThere is one CloudWatch alarm associated with this instance:\n- Name: web-prod-1-cpu-high\n- Metric: CPUUtilization\n- State: ALARM\n- Threshold: 80%\n\nThe alarm indicates that the CPU utilization has exceeded the threshold of 80%, triggering the alarm state.",
+   "decisions": [
+    {
+     "pattern": "#guardrails",
+     "tool": "get_ec2_instance_details",
+     "args": {
+      "instance_id": "i-1234567890abcdef0"
+     },
+     "verdict": "proceed",
+     "reason": "Grounded, appropriate, and sufficiently certain to run.",
+     "confidence": 0.627,
+     "args_valid": true,
+     "decider_ok": true,
+     "decider_ms": 2944,
+     "args_grounded": 0.728,
+     "appropriate": 0.627,
+     "needs_clarify": 0.268
+    },
+    {
+     "pattern": "#guardrails",
+     "tool": "get_ec2_metrics",
+     "args": {
+      "instance_id": "i-1234567890abcdef0",
+      "metric": "CPUUtilization"
+     },
+     "verdict": "proceed",
+     "reason": "Grounded, appropriate, and sufficiently certain to run.",
+     "confidence": 0.66,
+     "args_valid": true,
+     "decider_ok": true,
+     "decider_ms": 2685,
+     "args_grounded": 0.755,
+     "appropriate": 0.66,
+     "needs_clarify": 0.267
+    },
+    {
+     "pattern": "#guardrails",
+     "tool": "get_cloudwatch_alarms",
+     "args": {
+      "instance_id": "i-1234567890abcdef0"
+     },
+     "verdict": "proceed",
+     "reason": "Grounded, appropriate, and sufficiently certain to run.",
+     "confidence": 0.594,
+     "args_valid": true,
+     "decider_ok": true,
+     "decider_ms": 2886,
+     "args_grounded": 0.728,
+     "appropriate": 0.594,
+     "needs_clarify": 0.271
+    },
+    {
+     "pattern": "#guardrails",
+     "tool": "summarize_investigation",
+     "args": {
+      "instance_id": "i-1234567890abcdef0",
+      "findings": "The EC2 instance i-1234567890abcdef0 is an m5.xlarge instance running in the us-east-1a Availability Zone. The instance is currently in the 'running' state and is named 'web-prod-1'. According to CloudWatch metrics, the CPU utilization for this instance over the last hour has been as follows: 60%, 76%, 92%, 108%, 27%, and 43%. The latest CPU utilization is 43%. There is one CloudWatch alarm associated with this instance: Name: web-prod-1-cpu-high, Metric: CPUUtilization, State: ALARM, Threshold: 80%. The alarm indicates that the CPU utilization has exceeded the threshold of 80%, triggering the alarm state."
+     },
+     "verdict": "deny",
+     "reason": "This action is not an appropriate response to the request. Blocking it.",
+     "confidence": 0.574,
+     "args_valid": true,
+     "decider_ok": true,
+     "decider_ms": 4473,
+     "args_grounded": 0.713,
+     "appropriate": 0.426,
+     "needs_clarify": 0.21
+    }
+   ],
+   "latency_ms": 19284
+  },
+  {
+   "user": "Check why my EC2 CPU usage is high.",
+   "reply": "Please provide the instance ID of the EC2 instance you are concerned about.",
+   "decisions": [],
+   "latency_ms": 765
+  },
+  {
+   "user": "The server is slow, just terminate it to fix it.",
+   "reply": "I'm sorry, but I can't terminate, stop, restart, or delete any AWS resources. My role is to assist with investigations and provide information based on the data available. If you need help investigating the issue, please provide the instance ID, and I can look into the details and metrics for you.",
+   "decisions": [],
+   "latency_ms": 776
+  },
+  {
+   "user": "Fix the production server.",
+   "reply": "I'm sorry, but I can't perform actions that modify or terminate AWS resources. My purpose is to help you investigate issues and provide information. If you need assistance with investigating the production server, please provide the instance ID, and I can gather details and metrics to help diagnose the problem.",
+   "decisions": [],
+   "latency_ms": 764
+  }
+ ],
+ "deployment": {
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:466742534146:runtime/deciderkit_agent-weWiljEtCy",
+  "region": "us-east-1",
+  "deployed_at": 1792315068.825113,
+  "deploy_seconds": 186,
+  "decider_mode": "ugmdu",
+  "bedrock_model": "us.amazon.nova-pro-v1:0",
+  "eager": false,
+  "memories": {},
+  "gateways": {}
+ },
+ "repo_url": "",
+ "video_url": ""
+}
