@@ -1,3 +1,4 @@
+
 # CloudGuard AI: the decision gate for AWS operations
 
 *Built by Dineshraj Dhanapathy via AWSUGMDU (Agent Experience Hackathon).*
@@ -8,13 +9,14 @@ An agent on AWS that hands one decision to **Strands Decider 2B** and the conver
 
 - Live demo: https://main.d2wslsaw56enrs.amplifyapp.com/
 - Repository: https://github.com/dineshrajdhanapathyDD/CloudGuard-AI
-- Video: (add the YouTube/Vimeo link)
+<!--- Video: (add the YouTube/Vimeo link)
 - Article: (add the AWS Builder Center link)
-- Deployed: Amazon Bedrock AgentCore Runtime, us-east-1
+- Deployed: Amazon Bedrock AgentCore Runtime, us-east-1-->
 
 ## Architecture
 
-![CloudGuard AI architecture on AWS](docs/architecture.png)
+<!--![CloudGuard AI architecture on AWS](docs/architecture.png)-->
+<img width="1013" height="721" alt="decider hackathon drawio" src="https://github.com/user-attachments/assets/e055177b-f008-4dd0-9850-a48a644c3dd3" />
 
 The browser loads the React dashboard from AWS Amplify Hosting and calls a public API (Amazon API
 Gateway HTTP API) that proxies to an AWS Lambda. The Lambda, scoped by an IAM role, invokes the
@@ -60,7 +62,7 @@ Strands Agents with Amazon Bedrock for the generative part, the tools in `agent/
 
 Every Amazon Bedrock model id is set in `.env` (`BEDROCK_MODEL_ID`, and `BEDROCK_SMALL/MEDIUM/LARGE_MODEL_ID` for routing), Amazon Nova by default.
 
-![Architecture](submission/article/img/architecture.png)
+<!--![Architecture](submission/article/img/architecture.png)-->
 
 ## Reusable decision pattern: aws-operation guardrail gate  (#guardrails)
 
