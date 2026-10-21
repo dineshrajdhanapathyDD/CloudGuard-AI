@@ -71,13 +71,13 @@ export default function App() {
         </div>
       )}
 
-      <main className="grid min-h-0 flex-1 gap-5 p-5 lg:grid-cols-[1.15fr_1fr]">
+      <main className="grid min-h-0 flex-1 gap-5 overflow-y-auto p-5 lg:grid-cols-[1.15fr_1fr]">
         {/* Left column: overview + scenarios + chat */}
         <section className="flex min-h-0 flex-col gap-4">
           <StatCards stats={stats} />
           <DecisionMix stats={stats} />
           <ScenarioLauncher onRun={(m) => run(m, true)} busy={busy} />
-          <div className="flex min-h-0 flex-1 flex-col rounded-2xl border border-line bg-panel/70 p-4">
+          <div className="flex min-h-[320px] flex-1 flex-col rounded-2xl border border-line bg-panel/70 p-4">
             <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-mute">Conversation</h2>
             <Chat messages={messages} busy={busy} onSend={run} />
           </div>
