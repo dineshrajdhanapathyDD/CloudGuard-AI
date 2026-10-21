@@ -5,7 +5,7 @@
       "name": "Hackathon progress at session start",
       "description": "Shows which hackathon steps are done (setup, agent, bench, deploy, video, article, publish) so the agent and the participant know what is next.",
       "trigger": "SessionStart",
-      "action": { "type": "command", "command": "./kit status" },
+      "action": { "type": "command", "command": "cmd /c \"if exist kit.cmd (kit.cmd status) else (./kit status)\"" },
       "timeout": 20
     }
   ]

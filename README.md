@@ -3,15 +3,29 @@
 
 *Built by Dineshraj Dhanapathy via AWSUGMDU (Agent Experience Hackathon).*
 
-**CloudGuard AI is an AWS operations assistant with a decision gate: before it runs any**
+**CloudGuard AI is an AWS operations assistant with a decision gate: before it runs any AWS investigation tool, Strands Decider 2B judges whether the call is grounded, appropriate, and safe, so the agent never acts on invented instance ids or runs an action nobody asked for.**
 
 An agent on AWS that hands one decision to **Strands Decider 2B** and the conversation to **Amazon Bedrock**. Decision pattern: `#guardrails`. Tags: `#strands-decider-2b` `#guardrails`.
 
 - Live demo: https://main.d2wslsaw56enrs.amplifyapp.com/
 - Repository: https://github.com/dineshrajdhanapathyDD/CloudGuard-AI
-<!--- Video: (add the YouTube/Vimeo link)
-- Article: (add the AWS Builder Center link)
-- Deployed: Amazon Bedrock AgentCore Runtime, us-east-1-->
+- Article (AWS Builder Center): _add before submission_
+- Demo video (YouTube/Vimeo, under 3 min): _add before submission_
+- Deployed: Amazon Bedrock AgentCore Runtime, us-east-1
+
+## Submission checklist
+
+The hackathon has a pass/fail qualification check (all three parts required). This maps each requirement to where it lives:
+
+| Requirement | Where it is |
+|---|---|
+| Agent on AWS using Strands Decider 2B for a meaningful decision, paired with Amazon Bedrock | `agent/` (Bedrock Nova Pro + gate), deployed to AgentCore Runtime |
+| Article on AWS Builder Center | `docs/article-draft.md` → publish, then link above |
+| Public repo under an OSI license | this repo, Apache-2.0 (see `LICENSE`) |
+| At least one reusable decision pattern (typed questions, wiring, how-to note) | `agent/decision.py` and standalone `decision_patterns/guardrail_gate/` |
+| Public demo video under 3 minutes | record, upload, then link above |
+| Two tags: `#strands-decider-2b` + one pattern tag | `#strands-decider-2b` `#guardrails` |
+| Original agent, not previously published | CloudGuard AI, built for this hackathon |
 
 ## Architecture
 
@@ -137,6 +151,34 @@ QUESTIONS = {
 }
 ```
 
+### Drop it into your own agent
+
+The gate is packaged standalone under [`decision_patterns/guardrail_gate/`](decision_patterns/guardrail_gate/) with its own README and tests, so another builder can lift it without the rest of this app:
+
+```python
+from decider_kit import Decider
+from decision_patterns.guardrail_gate import GuardrailGate
+from strands import Agent
+
+gate = GuardrailGate(
+    Decider(),
+    guarded={"get_ec2_metrics", "terminate_ec2_instance"},  # tools to inspect
+    allowed={"get_ec2_metrics"},                             # tools permitted at all
+    destructive={"terminate_ec2_instance"},                 # never executed
+    validate=my_validate,          # (tool, args) -> (ok: bool, error: str | None)
+)
+agent = Agent(model=..., tools=[...], interventions=[gate])
+```
+
+Make it yours: fill the three sets and a `validate` callable, reword the three `QUESTIONS` for your domain, keep the code-owned facts (permission, risk, structural validation) out of the decider, then tune `yes` and `confidence_floor` on a held-out split with `./kit bench`.
+
+Run the pattern's tests:
+
+```bash
+.venv/Scripts/python.exe -m pytest decision_patterns/guardrail_gate/tests -q   # Windows
+.venv/bin/python -m pytest decision_patterns/guardrail_gate/tests -q           # macOS / Linux
+```
+
 ## Measured
 
 Decider: strands-decider-2b-hobson-v19 (ugmdu). 16 labelled cases, 45 decisions.
@@ -181,8 +223,10 @@ Built by Dineshraj Dhanapathy via AWSUGMDU (Agent Experience Hackathon).
 
 The CloudGuard AI agent in `agent/` and the reusable gate in `decision_patterns/guardrail_gate/` are by Dineshraj Dhanapathy. Strands Decider: https://github.com/strands-labs/strands-decider (Apache-2.0).
 
+Acknowledgement: CloudGuard AI uses the Strands Decider 2B hosted API provided by AWS User Group Madurai. Thank you for making the model available for experimentation.
+
 ## License
 
 Licensed under the Apache License, Version 2.0 (see LICENSE).
 
-Copyright 2026 Dineshraj Dhanapathy (via AWS User Group Madurai).
+Copyright 2026 Dineshraj Dhanapathy.
